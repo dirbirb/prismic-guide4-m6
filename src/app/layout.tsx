@@ -4,6 +4,9 @@ import clsx from "clsx";
 import "./globals.css";
 import { createClient } from "@/prismicio";
 
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+
 const nunito = Nunito({
   subsets: ["latin"],
   variable: "--font-nunito",
@@ -19,14 +22,14 @@ const nunitoSans = Nunito_Sans({
 export async function generateMetadata(): Promise<Metadata> {
   const client = createClient();
 
-  const page = await client.getSingle("setting");
+  const setting = await client.getSingle("setting");
 
   return {
-    title: page.data.site_title || "Guide fallback",
+    title: setting.data.site_title || "Guide fallback",
     description:
-      page.data.meta_description || "Guide is the relaxing blog for you.",
+      setting.data.meta_description || "Guide is the relaxing blog for you.",
     openGraph: {
-      images: [page.data.og_image.url || ""],
+      images: [setting.data.og_image.url || ""],
     },
   };
 }
@@ -39,9 +42,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={clsx(nunito.variable, nunitoSans.variable)}>
       <body>
-        <header>Header!</header>
+        <Header />
         {children}
-        <footer>footer!</footer>
+        <Footer />
       </body>
     </html>
   );
