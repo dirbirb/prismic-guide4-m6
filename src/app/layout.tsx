@@ -22,14 +22,14 @@ const nunitoSans = Nunito_Sans({
 export async function generateMetadata(): Promise<Metadata> {
   const client = createClient();
 
-  const setting = await client.getSingle("setting");
+  const settings = await client.getSingle("settings");
 
   return {
-    title: setting.data.site_title || "Guide fallback",
+    title: settings.data.site_title || "Guide fallback",
     description:
-      setting.data.meta_description || "Guide is the relaxing blog for you.",
+      settings.data.meta_description || "Guide is the relaxing blog for you.",
     openGraph: {
-      images: [setting.data.og_image.url || ""],
+      images: [settings.data.og_image.url || ""],
     },
   };
 }
